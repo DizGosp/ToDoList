@@ -1,0 +1,46 @@
+CREATE DATABASE FMT
+
+USE FMT
+--Identity
+create table "Identity" (
+UserId  uniqueidentifier DEFAULT NEWID() constraint PK_UserId  primary key ,
+FirstName nvarchar(50),
+LastName nvarchar(50),
+UserName nvarchar(50),
+PasswordHash nvarchar(50),
+PasswordSalt nvarchar (50),
+CreatedOn datetime
+)
+--ToDo
+create table ToDo (
+ToDoId  uniqueidentifier DEFAULT NEWID() constraint PK_ToDoId  primary key ,
+Title  nvarchar(50),
+IsCompleted bit,
+"Description"  nvarchar(max),
+CreatedBy uniqueidentifier constraint FK_CreatedBy foreign key references "Identity"(UserId) ,
+CreatedOn datetime,
+ModifiedOn datetime
+)
+--IdentityToDo
+create table IdentityToDo (
+IdentityToDoId  uniqueidentifier DEFAULT NEWID() constraint PK_IdentityToDoId  primary key ,
+UserId uniqueidentifier constraint FK_UserId foreign key references "Identity"(UserId),
+ToDoId uniqueidentifier constraint FK_ToDoId foreign key references ToDo(ToDoId)
+
+)
+
+--AuthToken
+create table AuthToken(
+AuthTokenId  uniqueidentifier DEFAULT NEWID() constraint PK_AuthTokenId  primary key ,
+UserTokenId uniqueidentifier constraint FK_UserTokenId foreign key references "Identity"(UserId),
+Value nvarchar(100),
+CreatedOn datetime
+)
+
+--Notification
+create table "Notification" (
+NotificationId  uniqueidentifier DEFAULT NEWID() constraint PK_NotificationId  primary key ,
+Title nvarchar(50),
+StatusOfNotification bit,
+UserNotId uniqueidentifier constraint FK_UserNotId foreign key references "Identity"(UserId)
+)
