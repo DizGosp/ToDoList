@@ -1,0 +1,43 @@
+﻿@model ToDoList.Model.Models.Identity
+@{
+    ViewData["Title"] = "EditUser";
+    string error_mess = (string)TempData["error_mess"];
+}
+
+<div id="bigBox">
+    <div id="pictureBox">
+        <input type="image" src="https://tistatech.com/wp-content/uploads/2017/01/hcd-icon.png" alt="Submit" width="60" height="60">
+    </div>
+    <h2>Edit:</h2>
+
+    <form asp-action="UpdateUser" onsubmit="return validateForm()" name="myForm">
+        <div style="margin-top:5%;">
+            <label class="labelBox">First name: </label>
+            <div>
+                <input asp-for="FirstName" class="inputBox" style="border:none;" placeholder="Type your name" name="FirstName" value="@Model.FirstName" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="labelBox">Last name: </label>
+            <div>
+                <input asp-for="LastName" class="inputBox" placeholder="Type your password" name="LastName" value="@Model.LastName" />
+            </div>
+        </div>
+
+        <input type="hidden" asp-for="UserName" class="inputBox" placeholder="Type your username" value="@Model.UserName" />
+        <input type="hidden" asp-for="UserId" class="inputBox" placeholder="Type your username" value="@Model.UserId" />
+        <input type="submit" class="form-control btn btn-primary" style="width: 30%; background-color: #0db2f2 " value="Edit" />
+    </form>
+
+
+    @if (error_mess != null)
+    {
+        <br />
+        <div class="alert alert-danger">@error_mess</div>
+    }
+
+
+</div>
+
+

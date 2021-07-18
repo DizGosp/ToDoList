@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    string error_mess = (string)TempData["error_mess"];
+    int brojac = 0;
+}
+@model List<ToDoList.Model.Models.Notification>
+
+<div style="margin-left:10%;">
+
+    <div id="#headBox" style="display:block;">
+        <div id="#smallHeadBox" style="display:inline-block;">
+            <h1>ALL TASK - TEST WEB APP</h1>
+        </div>
+        <div id="#smallHeadBox2" style="float:right; display:inline-block">
+            <a href="/Authentification/LogOut">
+                <img style="height:80px; width:80px;"
+                    src="https://storage.googleapis.com/opswat-marketing/www.opswat.com/images/icons/user_icon.png" />
+            </a>
+        </div>
+    </div>
+
+
+    <div id="#filterBox" style="display:block; margin-top:10%;">
+
+        <div id="filBox1">
+            <div class="filBoxic">
+                <label>TO DO Search:</label>
+                <input type="text" id="todoSearch" />
+            </div>
+
+            <div class="filBoxic">
+                <label>TO DO date from:</label>
+                <input type="date" id="todoDateSearch" onchange="getUsers()" />
+            </div>
+        </div>
+        <div id="filBox2">
+
+            <div class="filBoxic">
+                <label>TO DO date to:</label>
+                <input type="date" id="todoDateSearchTo" onchange="getUsers()" />
+            </div>
+
+            <div class="filBoxic">
+                <label>Status:</label>
+                <select id="todoStatusSearch" style="color:#36304a; width:200px;" name="VrijemeID" class="form-control input-md" onchange="getUsers()">
+                    <option style="color:#36304a;" value=""></option>
+                    <option style="color:#36304a;" value="Completed">Completed</option>
+                    <option style="color:#36304a;" value="In progress">In progress</option>
+                </select>
+            </div>
+        </div>
+        
+
+        
+
+    </div>
+     
+   
+    <div id="text-Area">
+
+    </div>
+
+</div>
+
+<script>
+
+     @foreach (var item in Model)
+    {
+                if (item.StatusOfNotification == false)
+        {
+            ++brojac;
+        }
+    }
+
+    if ('@brojac' != 0)
+    {
+        document.getElementById("brNotif").innerHTML = '@brojac';
+        document.getElementById("brNotif").style.backgroundColor = "orange";
+    }
+
+
+    if ('@error_mess'.length > 1)
+    {
+        alert('@error_mess');
+    }
+
+</script>

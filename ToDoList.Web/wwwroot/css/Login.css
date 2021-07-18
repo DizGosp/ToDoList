@@ -1,0 +1,59 @@
+﻿#bigBox
+{
+margin-top:10%;
+text-align:center;
+}
+
+.labelBox {
+    float: left;
+    margin-left: 35%;
+    margin-top: 2%;
+    color: #011f4b;
+    font-size: 25px;
+    font-style:inherit;
+}
+.inputBox {
+    clear: left;
+    border: none;
+    margin-top: 3%;
+    margin-left: 35%;
+    margin-right: 20%;
+    display: block;
+    font-size: 15px;
+}
+
+#buttSign {
+    background-color: white;
+    font-size: 25px;
+    color: #0db2f2;
+    border:none;
+    margin-top:2%;
+}
+
+
+#linkBox
+{
+   width:auto;
+   margin-left:30%;
+   margin-right:30%;
+   margin-top:2%;
+ height:60px;
+}
+
+.linkLilBox
+{
+   float:left;
+   display:inline-block;
+   margin-left:3%;
+}
+.linkLilBox:first-child{
+        margin-left: 30%;
+    }
+
+
+@media only screen and (max-width: 800px) {
+
+    .linkLilBox:first-child {
+        margin-left: 15%;
+    }
+}

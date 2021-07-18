@@ -1,0 +1,31 @@
+﻿@model ToDoList.Model.Models.IdentityToDo
+
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">First name</th>
+                <th scope="col">Last name</th>
+                <th scope="col">Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.users)
+            {
+            <tr>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.UserName</td>
+                <td>
+                    <a href="/Home/AssignedTo?id=@Model.ToDoId&uId=@item.UserId" class="btn btn-success">Asiign to</a>
+                </td>
+            </tr>
+            }
+
+        </tbody>
+    </table>
+
+
+
+

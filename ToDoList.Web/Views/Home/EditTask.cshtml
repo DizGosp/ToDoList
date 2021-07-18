@@ -1,0 +1,39 @@
+﻿@model ToDoList.Model.Models.ToDo
+@{
+    ViewData["Title"] = "AddToDo";
+    string error_mess = (string)TempData["error_mess"];
+}
+
+<div id="bigBox">
+
+    <form asp-action="EditTaskSave">
+        <div style="margin-top:5%;">
+            <label class="labelBox">TO DO Title: </label>
+            <div>
+                <input asp-for="Title" class="inputBox" style="border:none;" placeholder="Type the title" value="@Model.Title" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="labelBox">TO DO Description: </label>
+            <div>
+                <input asp-for="Description" class="inputBox" placeholder="Type your description" value="@Model.Description" />
+            </div>
+        </div>
+
+        <input type="hidden" asp-for="CreatedOn" class="inputBox" value="@Model.CreatedOn" readonly />
+        <input type="hidden" asp-for="IsCompleted" class="inputBox" value="@Model.IsCompleted" readonly />
+        <input type="hidden" asp-for="ToDoId" class="inputBox" value="@Model.ToDoId" readonly />
+
+        <input type="submit" class="form-control btn btn-primary" style="width: 30%; background-color: #0db2f2 " value="Update" />
+    </form>
+
+
+    @if (error_mess != null)
+    {
+        <br />
+        <div class="alert alert-danger">@error_mess</div>
+    }
+
+
+</div>

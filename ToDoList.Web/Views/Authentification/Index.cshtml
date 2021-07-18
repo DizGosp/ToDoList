@@ -1,0 +1,67 @@
+﻿@model ToDoList.Model.Models.Login
+    @{
+        ViewData["Title"] = "Index";
+        string error_mess = (string)TempData["error_mess"];
+        Layout = "_LayoutAnonimus";
+    }
+
+
+<div id="bigBox">
+    <div id="pictureBox">
+        <input type="image" src="https://tistatech.com/wp-content/uploads/2017/01/hcd-icon.png" alt="Submit" width="60" height="60">
+    </div>
+    <h2>Login:</h2>
+
+    <form asp-action="Login">
+        <div style="margin-top:5%;">
+            <label class="labelBox">Username: </label>
+            <div>
+                <input asp-for="UserName" class="inputBox" style="border:none;" placeholder="Type your username" required/>
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="labelBox">Password: </label>
+            <div>
+                <input asp-for="Password" class="inputBox" placeholder="Type your password" required/>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+        </div>
+
+        <input type="submit" class="form-control btn btn-primary" style="width: 30%; background-color: #0db2f2 " value="Prijava" />
+    </form>
+    <a asp-controller="Authentification" asp-action="Registration">
+        <input type="button" id="buttSign"  value="Sign Up" />
+    </a>
+
+
+    <div id="linkBox">
+        <div class="linkLilBox">
+            <a href="https://www.facebook.com/LogosoftBiH">
+                <input type="image" src="https://cdn3.iconfinder.com/data/icons/social-network-round-gloss-shine/512/Facebook_Social-Network-Communicate-Page-Curl-Effect-Circle-Glossy-Shadow-Shine.png" alt="Submit" width="40" height="40">
+            </a>
+        </div>
+        <div class="linkLilBox">
+            <a href="https://www.linkedin.com/company/logosoftbih/">
+                <input type="image" src="https://cdn4.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-linkedin-circle-512.png" alt="Submit" width="40" height="40">
+            </a>
+        </div>
+        <div class="linkLilBox">
+            <a href="https://www.instagram.com/logosoft_bih/">
+                <input type="image" src="https://www.brandchannel.com/wp-content/uploads/2016/05/instagram-new-logo-may-2016.jpg" alt="Submit" width="40" height="40">
+            </a>
+        </div>
+    </div>
+
+
+
+    @if (error_mess != null)
+    {
+        <br />
+        <div class="alert alert-danger">@error_mess</div>
+    }
+
+
+</div>
+

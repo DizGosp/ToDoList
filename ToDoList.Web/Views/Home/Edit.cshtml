@@ -1,0 +1,98 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    string error_mess = (string)TempData["error_mess"];
+}
+@model List<ToDoList.Model.Models.ToDo>
+
+
+
+<div class="text-Area">
+
+
+    @if (Model.Any())
+    {
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Created on</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Finish</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    string descRip = @item.Description;
+                <tr>
+
+                    <td>@item.Title</td>
+
+                    <td>
+                        @if (descRip.Length > 30)
+                        {
+                            <p id="@item.ToDoId">
+                                @descRip.Substring(0, 30)
+                            </p>
+                            <button id="btnShow" onclick="btnDescription('@item.ToDoId','@item.Description');">...</button>
+                        }
+                    </td>
+                    @if (item.IsCompleted)
+                    {
+                        <td>Completed</td>
+                    }
+                    else
+                    {
+                        <td>In progress</td>
+                    }
+                    <td>@item.CreatedOn.Date</td>
+
+                    @if (item.IsCompleted)
+                    {
+
+                        <td>
+                            <a class="btn btn-info">Edit</a>
+                        </td>
+                        <td> <a class="btn btn-success" style="color:white;">Finished</a></td>
+
+                    }
+
+                    else
+                    {
+                        <td>
+                            <a href="~/Home/EditTask?id=@item.ToDoId" class="btn btn-info">Edit</a>
+                        </td>
+                        <td>
+
+                            <a href="~/Home/EditStatus?id=@item.ToDoId" class="btn btn-warning" style="color:white;">Finish</a>
+                        </td>
+
+                    }
+
+                    <td>
+                        <a href="~/Home/Assign?id=@item.ToDoId" class="btn btn-info" style="color:white;">Assign</a>
+                    </td>
+
+                </tr>
+                }
+            </tbody>
+        </table>
+
+
+
+
+    }
+
+
+</div>
+
+
+<script>
+      if ('@error_mess'.length > 1)
+    {
+        alert('@error_mess');
+    }
+</script>

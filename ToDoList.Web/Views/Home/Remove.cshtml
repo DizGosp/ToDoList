@@ -1,0 +1,86 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model List<ToDoList.Model.Models.ToDo>
+
+
+
+
+<div class=".headBox">
+    <div class=".smallHeadBox">
+        <label>ALL TASK - TEST WEB APP</label>
+    </div>
+    <div class=".smallHeadBox">
+
+    </div>
+    <div class=".smallHeadBox"></div>
+</div>
+
+
+@*<div class=".filterBox">
+    <div>
+        <label>TO DO Seasrch:</label>
+        <input type="text" id="todosearch" />
+    </div>
+</div>*@
+
+<div class="text-center">
+
+
+    @if (Model.Any())
+    {
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Created on</th>
+                    <th scope="col">Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    string descRip = @item.Description;
+                    <tr>
+
+                        <td>@item.Title</td>
+
+                        <td>
+                            @if (descRip.Length > 30)
+                            {
+                                <p id="@item.ToDoId">
+                                    @descRip.Substring(0, 30)
+                                </p>
+                                <button id="btnShow" onclick="btnDescription('@item.ToDoId','@item.Description');">...</button>
+                            }
+                        </td>
+                        @if (item.IsCompleted)
+                        {
+                            <td>Completed</td>
+                        }
+                        else
+                        {
+                            <td>In progress</td>
+                        }
+                        <td>@item.CreatedOn.Date</td>
+
+                        <td>
+                          <a  href="~/Home/RemoveTask?id=@item.ToDoId" class="btn btn-danger" style="color:white;">Delete</a>               
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+
+
+    }
+
+
+</div>
+

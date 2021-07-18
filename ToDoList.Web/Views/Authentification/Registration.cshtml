@@ -1,0 +1,94 @@
+﻿@model ToDoList.Model.Models.Registration
+    @{
+        ViewData["Title"] = "Registration";
+        string error_mess = (string)TempData["error_mess"];
+        Layout = "_LayoutAnonimus";
+    }
+
+    <div id="bigBox">
+        <div id="pictureBox">
+            <input type="image" src="https://tistatech.com/wp-content/uploads/2017/01/hcd-icon.png" alt="Submit" width="60" height="60">
+        </div>
+        <h2>Registration:</h2>
+
+        <form asp-action="SaveRegistration" onsubmit="return validateForm()" name="myForm">
+            <div style="margin-top:5%;">
+                <label class="labelBox">First name: </label>
+                <div>
+                    <input asp-for="FirstName" class="inputBox" style="border:none;" placeholder="Type your name" name="FirstName" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="labelBox">Last name: </label>
+                <div>
+                    <input asp-for="LastName" class="inputBox" placeholder="Type your password" name="LastName" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="labelBox">Username: </label>
+                <div>
+                    <input asp-for="UserName" class="inputBox" placeholder="Type your username" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="labelBox">Password: </label>
+                <div>
+                    <input asp-for="Password" class="inputBox" placeholder="Type your password" name="Password" required />
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="labelBox">Confrim password: </label>
+                <div>
+                    <input  class="inputBox" placeholder="Confrim your password" name="CPassword" required />
+                </div>
+            </div>
+
+
+            <input type="submit" class="form-control btn btn-primary" style="width: 30%; background-color: #0db2f2 " value="Registration" />
+        </form>
+
+
+        @if (error_mess != null)
+        {
+            <br />
+            <div class="alert alert-danger">@error_mess</div>
+        }
+
+
+    </div>
+
+
+<script>
+
+    function validateForm()
+    {
+        let fx = document.forms["myForm"]["FirstName"].value;
+        let lx = document.forms["myForm"]["LastName"].value;
+        let ux = document.forms["myForm"]["UserName"].value;
+        let px = document.forms["myForm"]["Password"].value;
+        let cpx = document.forms["myForm"]["CPassword"].value;
+
+        if (fx == "")
+        {
+            alert("Name must be filled out!");
+        }
+        if (lx == "") {
+            alert("Last name must be filled out!");
+        }
+        if (ux == "") {
+            alert("Username must be filled out!");
+        }
+        if (cpx == "") {
+            alert("Password must be filled out!");
+        }
+        if (cpx !=px) {
+            alert("You must enter same password!");
+        }
+    }
+
+</script>

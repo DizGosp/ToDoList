@@ -1,0 +1,114 @@
+﻿@using ToDoList.Model.Models
+@{ 
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ToDoList.Web</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/NavBar.css" />
+    <link rel="stylesheet" href="~/css/Index.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="sidebar">
+
+                <i class='bx bx-menu' id="btnMenu" onclick="activateSidebar()"></i>
+                <ul class="nav_list">
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Index">
+                            <i class='bx bx-home'></i>
+                            <span class="linksname">Home</span>
+                        </a>
+                        <span class="tooltip">Notification</span>
+                        <hr class="new" />
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Notification">
+                            <i class='bx bx-notification'></i>
+                            <span class="linksname">Notification</span>
+                            <p id="brNotif" style="height:12px;width:12px; font-size:10px;">0</p>
+                        </a>
+                        <span class="tooltip">Notification</span>
+                        <hr class="new" />
+                    </li>
+
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="AddToDo">
+                            <i class='bx bx-task'></i>
+                            <span class="linksname">Task</span>
+                        </a>
+                        <span class="tooltip">Task</span>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Edit">
+
+                            <i class='bx bxs-edit'></i>
+                            <span class="linksname">Edit task</span>
+                        </a>
+                        <span class="tooltip">Edit task</span>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Remove">
+
+                            <i class='bx bx-task-x'></i>
+                            <span class="linksname">Remove task</span>
+                        </a>
+                        <span class="tooltip">Remove task</span>
+                        <hr class="new" />
+                    </li>
+
+                </ul>
+
+
+                <div id="bottomBox">
+                    <ul class="nav_list">
+                        <li>
+                            <a asp-area="" asp-controller="Home" asp-action="EditUser">
+
+                                <i class='bx bx-cog'></i>
+                                <span class="linksname">Settings</span>
+                            </a>
+                            <span class="tooltip">Settings</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <script>
+        var btn = document.querySelector("#btnMenu");
+        let sideBar = document.querySelector(".sidebar");
+
+        function activateSidebar() {
+            sideBar.classList.toggle("active");
+        }
+
+    </script>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/Index.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+
+
