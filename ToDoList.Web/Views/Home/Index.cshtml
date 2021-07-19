@@ -5,64 +5,67 @@
 }
 @model List<ToDoList.Model.Models.Notification>
 
-<div style="margin-left:10%;">
 
-    <div id="#headBox" style="display:block;">
-        <div id="#smallHeadBox" style="display:inline-block;">
-            <h1>ALL TASK - TEST WEB APP</h1>
-        </div>
-        <div id="#smallHeadBox2" style="float:right; display:inline-block">
+
+    <div id="headBox">
+
+        <div id="smallHeadBox2">
             <a href="/Authentification/LogOut">
-                <img style="height:80px; width:80px;"
-                    src="https://storage.googleapis.com/opswat-marketing/www.opswat.com/images/icons/user_icon.png" />
+                <img id="logOut"
+                     src="https://storage.googleapis.com/opswat-marketing/www.opswat.com/images/icons/user_icon.png" /><br />
+                <label style="color:black;">Log out</label>
             </a>
         </div>
     </div>
+    
 
+    <div id="textMenu">
 
-    <div id="#filterBox" style="display:block; margin-top:10%;">
+        <div id="textHeader">ALL TASKS - TEST WEB APP</div>
 
-        <div id="filBox1">
-            <div class="filBoxic">
-                <label>TO DO Search:</label>
-                <input type="text" id="todoSearch" />
+        <div id="filterBox" style="display:block; margin-top:10%;">
+
+            <div id="filBox1">
+                <div class="filBoxic" >
+                    <strong style="color:darkblue;">TO DO Search</strong><br />
+                    <input type="text" id="todoSearch" placeholder="Type something"/>
+                </div>
+
+                <div class="filBoxic">
+                    <strong style="color:darkblue;">TO DO date from</strong><br />
+                    <input type="date" id="todoDateSearch" onchange="getUsers()" placeholder="Pick a date" />
+                </div>
+            </div>
+            <div id="filBox2">
+
+                <div class="filBoxic">
+                    <strong style="color:darkblue;">TO DO date to</strong><br />
+                    <input type="date" id="todoDateSearchTo" onchange="getUsers()" placeholder="Pick a date" />
+                </div>
+
+                <div class="filBoxic">
+                    <strong style="color:darkblue;">TO DO Status</strong>
+                    <select id="todoStatusSearch" style="color:#36304a; width:200px;" name="VrijemeID" class="form-control input-md" onchange="getUsers()">
+                        <option style="color:#36304a;" value="">Pick a status</option>
+                        <option style="color:#36304a;" value="Completed">Completed</option>
+                        <option style="color:#36304a;" value="In progress">In progress</option>
+                    </select>
+                </div>
             </div>
 
-            <div class="filBoxic">
-                <label>TO DO date from:</label>
-                <input type="date" id="todoDateSearch" onchange="getUsers()" />
-            </div>
+
+
+
         </div>
-        <div id="filBox2">
 
-            <div class="filBoxic">
-                <label>TO DO date to:</label>
-                <input type="date" id="todoDateSearchTo" onchange="getUsers()" />
-            </div>
 
-            <div class="filBoxic">
-                <label>Status:</label>
-                <select id="todoStatusSearch" style="color:#36304a; width:200px;" name="VrijemeID" class="form-control input-md" onchange="getUsers()">
-                    <option style="color:#36304a;" value=""></option>
-                    <option style="color:#36304a;" value="Completed">Completed</option>
-                    <option style="color:#36304a;" value="In progress">In progress</option>
-                </select>
-            </div>
+        <div id="text-Area">
+
         </div>
-        
-
-        
 
     </div>
-     
-   
-    <div id="text-Area">
 
-    </div>
-
-</div>
-
-<script>
+    <script>
 
      @foreach (var item in Model)
     {
@@ -84,4 +87,4 @@
         alert('@error_mess');
     }
 
-</script>
+    </script>

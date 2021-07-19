@@ -48,6 +48,15 @@ namespace ToDoList.DB.Repositories
         {
             try
             {
+
+                var sql1 = ("Delete [IdentityToDo] where ToDoId=@toDoId");
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("db")))
+                {
+                    connection.Open();
+                    var result = connection.Execute(sql1, new { @toDoId = id });
+                }
+
+
                 var sql = ("Delete [ToDo] where ToDoId=@toDoId");
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("db")))
                 {

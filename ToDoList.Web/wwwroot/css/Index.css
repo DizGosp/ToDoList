@@ -2,8 +2,70 @@
 {
     display:inline-block;
     width:50%;
+    float:left;
 }
 #filBox2 {
     display: inline-block;
     width:50%;
+}
+
+#mainBox {
+    position: center;
+    width: auto;
+    height: auto;
+    border: 3px solid red;
+    overflow: visible;
+}
+
+
+#headBox {
+    position: fixed;
+    top: 0;
+    right: 0;
+    float:right;
+    text-align:center;
+}
+
+#logOut {
+    height:50px;
+    width:100px;
+}
+
+#textMenu
+{
+    display:block;
+}
+
+.filBoxic
+{
+    display:inline-block;
+}
+
+.filBoxic {
+    margin-left: 3%;
+    margin-right: 3%;
+}
+#filBox1
+{
+    display:inline-block;
+    text-align:center;
+}
+#filBox2 {
+    text-align: center;
+    display: inline-block;
+}
+
+@media only screen and (max-width: 1050px) {
+    #filBox1 {
+        display:block;
+    }
+    #filBox2 {
+        display: block;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    #textMenu{
+        margin-left: 50px;
+    }
 }

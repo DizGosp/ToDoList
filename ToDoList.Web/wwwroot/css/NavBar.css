@@ -170,3 +170,22 @@ hr.new {
     margin-right: auto;
     margin-left: auto;
 }
+
+
+.home_content
+{
+ position:absolute;
+ height:100%;
+ width:calc(100%-240px);
+ left:240px;
+}
+.home_content .textHome
+{
+    font-size:25px;
+    font-weight:500;
+    color:dimgray;
+    margin:12px;
+}
+
+
+

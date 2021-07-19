@@ -2,17 +2,41 @@
 
 
 
-    <table class="table">
-        <thead>
+<h2>Korisnici koji su zaduženi za ovaj task:</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+            <th scope="col">Username</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Assignedusers)
+        {
             <tr>
-                <th scope="col">First name</th>
-                <th scope="col">Last name</th>
-                <th scope="col">Username</th>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.UserName</td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.users)
-            {
+        }
+
+    </tbody>
+</table>
+
+<h2>Zadužite korisnika na task:</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+            <th scope="col">Username</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.users)
+        {
             <tr>
                 <td>@item.FirstName</td>
                 <td>@item.LastName</td>
@@ -21,10 +45,10 @@
                     <a href="/Home/AssignedTo?id=@Model.ToDoId&uId=@item.UserId" class="btn btn-success">Asiign to</a>
                 </td>
             </tr>
-            }
+        }
 
-        </tbody>
-    </table>
+    </tbody>
+</table>
 
 
 

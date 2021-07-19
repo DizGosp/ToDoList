@@ -41,7 +41,6 @@ namespace ToDoList.Web.Controllers
             _idToDo = idToDo;
             _notif = notification;
         }
-
         public PartialViewResult SearchUsers(string searchText, DateTime dateSearch, DateTime dateSearchTo, string StatusSearch)
         {
             var result = _toDo.GetAll();
@@ -110,8 +109,6 @@ namespace ToDoList.Web.Controllers
 
 
         }
-
-
         public IActionResult Index()
         {
             var token = HttpContext.GetLogiraniKorisnik((Microsoft.Extensions.Configuration.IConfiguration)_configuration, _mapper);
@@ -126,13 +123,11 @@ namespace ToDoList.Web.Controllers
             return RedirectToAction("Index", "Authentification");
 
         }
-
         public IActionResult AddToDo()
         {
 
             return View();
         }
-
         public IActionResult SaveToDo(ToDo toDo)
         {
             var token = HttpContext.GetLogiraniKorisnik((Microsoft.Extensions.Configuration.IConfiguration)_configuration, _mapper);
@@ -154,14 +149,12 @@ namespace ToDoList.Web.Controllers
                 return RedirectToAction("AddToDo", "Home");
             }
         }
-
         public IActionResult EditUser()
         {
             var token = HttpContext.GetLogiraniKorisnik((Microsoft.Extensions.Configuration.IConfiguration)_configuration, _mapper);
             var user = _identity.GetByUserName(token.UserName);
             return View(user);
         }
-
         public IActionResult UpdateUser(Identity entity)
         {
             if (_identity.Update(entity))
@@ -173,8 +166,6 @@ namespace ToDoList.Web.Controllers
             TempData["succ_mess"] = "Uspjesno izvrsena operacija!";
             return RedirectToAction("Index", "Home");
         }
-
-
         public IActionResult Edit()
         {
             var token = HttpContext.GetLogiraniKorisnik((Microsoft.Extensions.Configuration.IConfiguration)_configuration, _mapper);
@@ -183,8 +174,6 @@ namespace ToDoList.Web.Controllers
 
             return View(toDoList);
         }
-
-
         public IActionResult EditTask(string id)
         {
 
@@ -192,7 +181,6 @@ namespace ToDoList.Web.Controllers
 
             return View(toDoList);
         }
-
         public IActionResult EditTaskSave(ToDo entity)
         {
 
@@ -207,7 +195,6 @@ namespace ToDoList.Web.Controllers
             return RedirectToAction("Index", "Edit");
 
         }
-
         public IActionResult EditStatus(string id)
         {
             var edit = _toDo.Get(id);
@@ -224,7 +211,6 @@ namespace ToDoList.Web.Controllers
                 return RedirectToAction("Edit", "Home");
             }
         }
-
         public IActionResult Remove()
         {
             var token = HttpContext.GetLogiraniKorisnik((Microsoft.Extensions.Configuration.IConfiguration)_configuration, _mapper);
@@ -233,48 +219,63 @@ namespace ToDoList.Web.Controllers
 
             return View(toDoList);
         }
-
         public IActionResult RemoveTask(string id)
         {
 
-            if (_toDo.Delete(id))
+            var token = HttpContext.GetLogiraniKorisnik((Microsoft.Extensions.Configuration.IConfiguration)_configuration, _mapper);
+            var user = _identity.GetByUserName(token.UserName);
+            var toDoList = _toDo.getByUser(user.UserId);
+            bool postoji = false;
+            foreach (var item in toDoList)
             {
-                TempData["error_mess"] = "Operacija uspjesno izvrsena!";
+                if (item.ToDoId == id)
+                {
+                    postoji = true;
+                }
+
+            }
+            if (postoji)
+            {
+                if (_toDo.Delete(id))
+                {
+                    TempData["error_mess"] = "Operacija uspjesno izvrsena!";
+                }
+                else
+                {
+                    TempData["error_mess"] = "Operacija nije izvrsena, molimo pokusajte ponovo!";
+                }
             }
             else
             {
-                TempData["error_mess"] = "Operacija nije izvršena, molimo pokušajte ponovo!";
+                TempData["error_mess"] = "Operacija nije moguce izvrsiti, task je kreiran od strane drugog korisnika!";
             }
-
             return RedirectToAction("Index", "Home");
         }
-
         public IActionResult Privacy()
         {
 
             return View();
         }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-
         public IActionResult Assign(string id)
         {
             var token = HttpContext.GetLogiraniKorisnik((Microsoft.Extensions.Configuration.IConfiguration)_configuration, _mapper);
+            var user = _identity.GetByUserName(token.UserName);
             IdentityToDo result = new IdentityToDo()
             {
                 ToDoId = id,
-                users = new List<IdentityToDo.Rows>()
+                users = new List<IdentityToDo.Rows>(),
+                Assignedusers = new List<IdentityToDo.Rows>()
             };
             var users = _identity.GetAll();
 
             foreach (var item in users)
             {
-                if (item.UserName != token.UserName)
+                if (item.UserId != user.UserId)
                 {
                     result.users.Add(new IdentityToDo.Rows
                     {
@@ -287,10 +288,28 @@ namespace ToDoList.Web.Controllers
 
             }
 
+            var AssignedList = _idToDo.GetAll();
+
+            foreach (var item in AssignedList)
+            {
+                foreach (var x in users)
+                {
+                    if(item.ToDoId==id && item.UserId == x.UserId) 
+                    {
+                        result.Assignedusers.Add(new IdentityToDo.Rows
+                        {
+                            UserId = x.UserId,
+                            FirstName = x.FirstName,
+                            LastName = x.LastName,
+                            UserName = x.UserName
+                        });
+                    }
+                }
+            }
+
 
             return View(result);
         }
-
         public IActionResult AssignedTo(string id, string uId)
         {
             IdentityToDoAdd x = new IdentityToDoAdd()
@@ -298,20 +317,35 @@ namespace ToDoList.Web.Controllers
                 ToDoId = id,
                 UserId = uId
             };
-                
-            if (_idToDo.Add(x))
+            var taskAssigned = _idToDo.GetAll();
+            bool postoji = false;
+            foreach (var item in taskAssigned)
             {
-                TempData["error_mess"] = "Operacija uspjesno izvrsena!";
+                if(item.ToDoId==id && item.UserId == uId) 
+                {
+                    postoji = true;
+                }
             }
-            else
+
+            if (postoji == false) 
             {
-                TempData["error_mess"] = "Operacija nije izvršena, molimo pokušajte ponovo!";
+                if (_idToDo.Add(x))
+                {
+                    TempData["error_mess"] = "Operacija uspjesno izvrsena!";
+                }
+                else
+                {
+                    TempData["error_mess"] = "Operacija nije izvrsena, molimo pokusajte ponovo!";
+                }
             }
+            else 
+            {
+                TempData["error_mess"] = "Operacija nije izvrsena, korisniku je vec dodjeljen isti task!";
+            }
+            
 
             return RedirectToAction("Index", "Home");
         }
-
-
         public IActionResult Notification()
         {
             var token = HttpContext.GetLogiraniKorisnik((Microsoft.Extensions.Configuration.IConfiguration)_configuration, _mapper);
@@ -324,8 +358,6 @@ namespace ToDoList.Web.Controllers
 
             return View(notifications);
         }
-
-
     }
 
 

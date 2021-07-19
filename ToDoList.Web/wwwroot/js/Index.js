@@ -1,13 +1,50 @@
+
+
+
 function btnDescription(id, desc) {
     var localString = document.getElementById(id).innerHTML;
     var cutString = desc;
     cutString = cutString.substring(0, 30);
+
     if (localString.length > 30) {
         document.getElementById(id).innerHTML = cutString;
     }
     else {
         document.getElementById(id).innerHTML = desc;
+
     }
+
+}
+
+
+
+
+function btnEdit() {
+
+    for (var i = 0; i < document.getElementsByClassName("btnDiv").length; i++) {
+        if (document.getElementsByClassName("btnDiv")[i].style.display == "block") {
+            document.getElementsByClassName("btnDiv")[i].style.display = "none";
+        }
+        else {
+            document.getElementsByClassName("btnDiv")[i].style.display = "block";
+
+        }
+    }
+
+}
+
+function btnRemove() {
+
+    for (var i = 0; i < document.getElementsByClassName("deleteBox").length; i++) {
+        if (document.getElementsByClassName("deleteBox")[i].style.display == "block") {
+            document.getElementsByClassName("deleteBox")[i].style.display = "none";
+        }
+        else {
+            document.getElementsByClassName("deleteBox")[i].style.display = "block";
+
+        }
+    }
+
 }
 
 

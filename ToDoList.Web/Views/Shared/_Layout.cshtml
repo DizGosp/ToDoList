@@ -1,5 +1,5 @@
 ﻿@using ToDoList.Model.Models
-@{ 
+@{
 
 }
 
@@ -18,9 +18,9 @@
 </head>
 <body>
     <header>
-        <nav>
+        <nav style="display:inline-block;">
             <div class="sidebar">
-
+    
                 <i class='bx bx-menu' id="btnMenu" onclick="activateSidebar()"></i>
                 <ul class="nav_list">
                     <li>
@@ -49,7 +49,7 @@
                         <span class="tooltip">Task</span>
                     </li>
                     <li>
-                        <a asp-area="" asp-controller="Home" asp-action="Edit">
+                        <a href="#" onclick="btnEdit()">
 
                             <i class='bx bxs-edit'></i>
                             <span class="linksname">Edit task</span>
@@ -57,7 +57,7 @@
                         <span class="tooltip">Edit task</span>
                     </li>
                     <li>
-                        <a asp-area="" asp-controller="Home" asp-action="Remove">
+                        <a href="#" onclick="btnRemove()" >
 
                             <i class='bx bx-task-x'></i>
                             <span class="linksname">Remove task</span>
@@ -82,9 +82,11 @@
                     </ul>
                 </div>
 
+
             </div>
 
         </nav>
+
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -97,6 +99,21 @@
 
         function activateSidebar() {
             sideBar.classList.toggle("active");
+
+            if (document.getElementById("textMenu").style.marginLeft == "200px")
+            {
+                document.getElementById("textMenu").style.marginLeft = "50px";
+            } else
+            {
+                document.getElementById("textMenu").style.marginLeft = "200px";
+            }
+
+
+            if (document.getElementById("filBox1").style.float == "none") {
+                document.getElementById("filBox1").style.float = "left";
+            } else {
+                document.getElementById("filBox1").style.float = "none";
+            }
         }
 
     </script>
@@ -109,6 +126,4 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-
-
 

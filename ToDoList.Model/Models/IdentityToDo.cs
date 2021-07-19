@@ -12,6 +12,7 @@ namespace ToDoList.Model.Models
         public string ToDoId { get; set; }
 
        public  List<Rows> users { get; set; }
+       public List<Rows>  Assignedusers { get; set; } 
 
         public class Rows
         {

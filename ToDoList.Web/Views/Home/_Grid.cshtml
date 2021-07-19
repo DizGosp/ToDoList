@@ -2,11 +2,14 @@
 @model List<ToDoList.Model.Models.ToDo>
 
 
-@*@foreach (var item in Model)
+@foreach (var item in Model)
 {
     string descRip = @item.Description;
 <div class="myTable">
 
+    <div class="deleteBox">
+        <a href="~/Home/RemoveTask?id=@item.ToDoId" style="color:red"><strong>X</strong></a>
+    </div>
     <div class="textLine">
 
         <div class="textLineBox1">@item.Title</div>
@@ -25,105 +28,65 @@
 
 
         <div class="textLineBox3" onclick="btnDescription('@item.ToDoId','@item.Description');">...</div>
-        <div class="textLineBox4">@item.CreatedBy</div>
+        <div class="textLineBox4">@item.CreatedBy.Substring(0,2)</div>
     </div>
 
     <div class="dateLine">
         <div class="date1">Created on: @item.CreatedOn.Date</div>
         <div class="date2">Modified on: @item.ModifiedOn.Date</div>
     </div>
-    <div class="moreTextBox">
-        @if (descRip.Length > 30)
-        {
-            <p id="@item.ToDoId">
-                @descRip.Substring(0, 30)
-            </p>
-        }
-    </div>
+
+
+
+    @if (descRip.Length > 30)
+    {
+
+        <p id="@item.ToDoId">
+            @descRip.Substring(0, 30)
+        </p>
+    }
+
+    @if (item.IsCompleted)
+    {
+        <div class="btnDiv">
+            <a class="btn btn-info">Edit</a>
+            <a class="btn btn-warning" style="color:white;">Finish</a>
+            <a class="btn btn-info" style="color:white;">Assign</a>
+        </div>
+    }
+    else
+    {
+        <div class="btnDiv">
+            <a href="~/Home/EditTask?id=@item.ToDoId" class="btn btn-info">Edit</a>
+            <a href="~/Home/EditStatus?id=@item.ToDoId" class="btn btn-warning" style="color:white;">Finish</a>
+            <a href="~/Home/Assign?id=@item.ToDoId" class="btn btn-info" style="color:white;">Assign</a>
+        </div>
+    }
 
 </div>
-}*@
-
-
-
-
-@if (Model.Any())
-{
-
-    <table class="table">
-        <thead>
-            <tr>
-
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-                <th scope="col">Status</th>
-                <th scope="col">Created by</th>
-                <th scope="col">Created on</th>
-                <th scope="col">Modified on</th>
-            </tr>
-        </thead>
-
-
-
-
-        <tbody>
-            @foreach (var item in Model)
-            {
-                string descRip = @item.Description;
-                <tr>
-                    <td>@item.Title</td>
-
-                    <td>
-                        @if (descRip.Length > 30)
-                        {
-                            <p id="@item.ToDoId">
-                                @descRip.Substring(0, 30)
-                            </p>
-                            <button id="@item.ToDoId" onmouseover="change('@item.ToDoId')" onmouseout="changeTo('@item.ToDoId')" onclick="btnDescription('@item.ToDoId','@item.Description');">...</button>
-
-                        }
-                    </td>
-                    @if (item.IsCompleted)
-                    {
-                        <td>Completed</td>
-                    }
-                    else
-                    {
-                        <td>In progress</td>
-                    }
-                    <td>@item.CreatedBy</td>
-                    <td>@item.CreatedOn.Date</td>
-                    <td>@item.ModifiedOn</td>
-
-
-
-                </tr>
-            }
-        </tbody>
-    </table>
-
 }
 
-@*<style>
+
+<style>
     .myTable {
         text-align: left;
-        -webkit-box-shadow: 0 10px 5px #888888;
-        -moz-box-shadow: 0 10px 5px #888888;
-        box-shadow: 0 10px 5px #888888;
-
-        height:100px;
+        -webkit-box-shadow: 0 5px 0px #888888;
+        -moz-box-shadow: 0 5px 0px #888888;
+        box-shadow: 0 5px 5px #888888;
+        height:auto;
+        margin-top:5%;
     }
 
     .textLine {
-        display: block;
+        display: inline-block;
         width: 100%;
-        margin-top: 10%;
+        margin-left: 5%;
     }
 
             .textLineBox1 {
                 display: inline-block;
                 padding-top:0;
-                width: 40%;
+                width: 30%;
                 font-size: 30px;
             }
 
@@ -131,28 +94,28 @@
         display: inline-block;
         padding-top: 0;
         margin-left: 10%;
-        width: 30%;
+        width: 20%;
         font-size: 12px;
     }
 
     .textLineBox3 {
         display: inline-block;
         padding-top: 0;
-        margin-left: 10%;
-        width: 15%;
-        font-size: 20px;
-        color: red;
+        padding-bottom:5px;
+        margin-left:10%;
+        width: auto;
+        font-size: 50px;
+        color: #0db2f2;
     }
 
     .textLineBox4 {
         display: inline-block;
-        padding-top: 0;
-        margin-left: 2%;
-        width: 10%;
+        padding:5px;
+        width: auto;
         border-radius: 50%;
-        font-size: 20px;
+        font-size: 30px;
         color: white;
-        background-color: red;
+        background-color: #0db2f2;
         text-align: center;
     }
 
@@ -160,11 +123,11 @@
         .dateLine {
             display: block;
             width: 100%;
+            margin-left:5%;
         }
 
             .date1 {
                 display: inline-block;
-                margin-left: 5%;
                 width: 40%;
                 font-size: 12px;
             }
@@ -175,12 +138,30 @@
                 width: 40%;
                 font-size: 12px;
             }
-       
-   .moreTextBox{
-        display:block;
-        width:100%;
-        height:auto;
-        font-size:14px;
-        color:gray;
+
+    .moreTextBox {
+        display: block;
+        height: auto;
+        width: 100%;
+        font-size: 14px;
+        color: gray;
+        margin-left: 5%;
+        padding-left:5%;
     }
-</style>*@
+
+    .deleteBox {
+     display:none;
+     text-align:right;
+     padding-right:0px;
+    }
+
+    .btnDiv
+    {
+        display:none;
+        margin-bottom:3%;
+    }
+    .btnDiv a {
+        margin-left: 20%;
+    }
+
+</style>
