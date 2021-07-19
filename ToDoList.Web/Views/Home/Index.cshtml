@@ -7,6 +7,9 @@
 
 
 
+
+
+
     <div id="headBox">
 
         <div id="smallHeadBox2">
@@ -17,7 +20,7 @@
             </a>
         </div>
     </div>
-    
+
 
     <div id="textMenu">
 
@@ -26,9 +29,9 @@
         <div id="filterBox" style="display:block; margin-top:10%;">
 
             <div id="filBox1">
-                <div class="filBoxic" >
+                <div class="filBoxic">
                     <strong style="color:darkblue;">TO DO Search</strong><br />
-                    <input type="text" id="todoSearch" placeholder="Type something"/>
+                    <input type="text" id="todoSearch" placeholder="Type something" />
                 </div>
 
                 <div class="filBoxic">
@@ -65,6 +68,34 @@
 
     </div>
 
+
+    <div id="modalBox">
+        <div id="modal">
+           
+            <form action="~/Home/SaveToDo"   method="post" name="myForm">
+                <div>
+                    <label class="labelBox">TO DO Title: </label>
+                    <div>
+                        <input class="inputBox" placeholder="Type the title" name="title" required />
+                    </div>
+                </div>
+
+                <div>
+                    <label class="labelBox">TO DO Description: </label>
+                    <div>
+                        <input class="inputBox" placeholder="Type your description" name="desc" required />
+                    </div>
+                </div>
+
+                <input id="btnIdAdd" onclick="checkModal()" type="submit" style="margin-top:5%;" class="form-control btn btn-primary" value="Add TO DO" />
+
+                <button  onclick="checkModal()" style="margin-top:5%;" class="form-control btn btn-danger">Close</button>
+
+            </form>
+        </div>
+    </div>
+
+
     <script>
 
      @foreach (var item in Model)
@@ -86,5 +117,19 @@
     {
         alert('@error_mess');
     }
+
+
+        function checkModal()
+        {
+            if (document.getElementById('modalBox').style.visibility == 'visible') {
+                document.getElementById('modalBox').style.visibility = 'hidden';
+                document.getElementById('modalBox').style.opacity = '0';
+            }
+            else {
+                document.getElementById('modalBox').style.visibility = 'visible';
+                document.getElementById('modalBox').style.opacity = '1';
+            }
+        }
+
 
     </script>

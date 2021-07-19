@@ -128,10 +128,14 @@ namespace ToDoList.Web.Controllers
 
             return View();
         }
-        public IActionResult SaveToDo(ToDo toDo)
+        public IActionResult SaveToDo(string title, string desc)
         {
+            ToDo toDo = new ToDo();
+
             var token = HttpContext.GetLogiraniKorisnik((Microsoft.Extensions.Configuration.IConfiguration)_configuration, _mapper);
             var userLoged = _identity.GetByUserName(token.UserName);
+            toDo.Title = title;
+            toDo.Description = desc;
             toDo.CreatedBy = userLoged.UserId;
             toDo.CreatedOn = DateTime.Now;
             toDo.ModifiedOn = DateTime.Now;
@@ -140,13 +144,13 @@ namespace ToDoList.Web.Controllers
 
             if (saved)
             {
-                TempData["succ_mess"] = "Uspjesno izvrsena operacija!";
+                TempData["error_mess"] = "Uspjesno izvrsena operacija!";
                 return RedirectToAction("Index", "Home");
             }
             else
             {
                 TempData["error_mess"] = "Dodavanje nije uspjelo, molimo pokusajte ponovo!";
-                return RedirectToAction("AddToDo", "Home");
+                return RedirectToAction("Index", "Home");
             }
         }
         public IActionResult EditUser()
@@ -187,12 +191,12 @@ namespace ToDoList.Web.Controllers
             entity.ModifiedOn = DateTime.Now;
             if (_toDo.Update(entity))
             {
-                TempData["succ_mess"] = "Operacija nije izvrsena, pokusajte ponovo!";
+                TempData["error_mess"] = "Operacija nije izvrsena, pokusajte ponovo!";
                 return RedirectToAction("Index", "Home");
             }
 
-            TempData["succ_mess"] = "Uspjesno izvrsena operacija!";
-            return RedirectToAction("Index", "Edit");
+            TempData["error_mess"] = "Uspjesno izvrsena operacija!";
+            return RedirectToAction("Index", "Home");
 
         }
         public IActionResult EditStatus(string id)
@@ -208,7 +212,7 @@ namespace ToDoList.Web.Controllers
             else
             {
                 TempData["error_mess"] = "Brisanje nije uspjelo, molimo pokušajte ponovo!";
-                return RedirectToAction("Edit", "Home");
+                return RedirectToAction("Index", "Home");
             }
         }
         public IActionResult Remove()

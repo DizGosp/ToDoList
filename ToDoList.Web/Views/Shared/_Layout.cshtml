@@ -20,7 +20,7 @@
     <header>
         <nav style="display:inline-block;">
             <div class="sidebar">
-    
+
                 <i class='bx bx-menu' id="btnMenu" onclick="activateSidebar()"></i>
                 <ul class="nav_list">
                     <li>
@@ -42,7 +42,7 @@
                     </li>
 
                     <li>
-                        <a asp-area="" asp-controller="Home" asp-action="AddToDo">
+                        <a href="#" onclick="modalActive()">
                             <i class='bx bx-task'></i>
                             <span class="linksname">Task</span>
                         </a>
@@ -57,7 +57,7 @@
                         <span class="tooltip">Edit task</span>
                     </li>
                     <li>
-                        <a href="#" onclick="btnRemove()" >
+                        <a href="#" onclick="btnRemove()">
 
                             <i class='bx bx-task-x'></i>
                             <span class="linksname">Remove task</span>
@@ -88,6 +88,9 @@
         </nav>
 
     </header>
+
+  
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -100,11 +103,9 @@
         function activateSidebar() {
             sideBar.classList.toggle("active");
 
-            if (document.getElementById("textMenu").style.marginLeft == "200px")
-            {
+            if (document.getElementById("textMenu").style.marginLeft == "200px") {
                 document.getElementById("textMenu").style.marginLeft = "50px";
-            } else
-            {
+            } else {
                 document.getElementById("textMenu").style.marginLeft = "200px";
             }
 
@@ -115,6 +116,24 @@
                 document.getElementById("filBox1").style.float = "none";
             }
         }
+
+        function modalActive()
+        {
+            console.log("2");
+            if (document.getElementById('modalBox').style.visibility == 'visible') {
+                document.getElementById('modalBox').style.visibility = 'hidden';
+                document.getElementById('modalBox').style.opacity = '0';
+            }
+            else
+            {
+                document.getElementById('modalBox').style.visibility = 'visible';
+                document.getElementById('modalBox').style.opacity = '1';
+            }
+        }
+       
+
+       
+
 
     </script>
 
